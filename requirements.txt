@@ -121,3 +121,8 @@ zipp<=3.15.0; python_version == '3.6'
 zstandard<=0.20.0; python_version == '3.6'
 zstandard<=0.21.0; python_version == '3.7'
 zstandard<=0.14.0; python_version == '2.7'
+# require for DataRefile
+sqlalchemy==1.4.46
+mysql-connector-python==8.0.33
+PyYAML==6.0.1
+cos-python-sdk-v5>=1.9.34

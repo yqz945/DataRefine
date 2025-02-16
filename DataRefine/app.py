@@ -61,7 +61,7 @@ def allowed_file(filename):
 if __name__ == '__main__':
     try:
         HOST = "0.0.0.0"
-        PORT = 8080
+        PORT = 8755
 
         initialize_process_props(HOST, PORT)
         app_url = build_url(HOST, str(PORT))
