@@ -26,6 +26,13 @@
   src: url("../fonts/icograil.woff?v1") format("woff"), url("../fonts/icograil.ttf?v1") format("truetype"), url("../fonts/icograil.svg?v1#icon") format("svg");
 }
 
+@font-face {
+    font-family: 'YouSheBiaoTiHei';
+    src: url('../fonts/YouSheBiaoTiHei.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 #text-measure {
   font-family: "Istok", "Helvetica", Arial, sans-serif;
   font-weight: bold;

@@ -14,15 +14,15 @@ except ImportError:
 logger = getLogger(__name__)
 
 APP_SETTINGS = {
-    "theme": "light",
+    "theme": "dark",
     "pin_menu": False,
-    "language": "en",
+    "language": "cn",
     "github_fork": False,
     "hide_shutdown": False,
     "max_column_width": None,
     "max_row_height": None,
-    "main_title": None,
-    "main_title_font": None,
+    "main_title": "数智求索",
+    "main_title_font": "YouSheBiaoTiHei",
     "query_engine": "python",
     "open_custom_filter_on_startup": False,
     "open_predefined_filters_on_startup": False,

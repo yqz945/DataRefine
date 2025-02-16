@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数智求索</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #1a1c1e;
+            color: #ffffff;
+        }
+        
+        .main-card {
+            background-color: #2d2f31;
+            border: 1px solid #3a3d40;
+            transition: transform 0.2s;
+            height: 300px;
+            cursor: pointer;
+        }
+        
+        .main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-color: #4a4d50;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #00ccff;
+        }
+
+        .sample-link {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: #2d2f31;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid #3a3d40;
+            transition: all 0.3s ease;
+        }
+
+        .sample-link:hover {
+            background-color: #3a3d40;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        
+        .choice-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+            background-color: #2d2f31;
+            border: 1px solid #3a3d40;
+        }
+        
+        .choice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-color: #4a4d50;
+        }
+        
+        .card-title {
+            color: #ffffff;
+        }
+        
+        .card-text {
+            color: #9da3a7 !important;
+        }
+        
+        .modal-content {
+            background-color: #2d2f31;
+            border: 1px solid #3a3d40;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid #3a3d40;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid #3a3d40;
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        .form-control, .form-select {
+            background-color: #1a1c1e;
+            border: 1px solid #3a3d40;
+            color: #ffffff;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: #1a1c1e;
+            border-color: #4a4d50;
+            color: #ffffff;
+            box-shadow: 0 0 0 0.25rem rgba(74, 77, 80, 0.25);
+        }
+        
+        .form-text {
+            color: #9da3a7;
+        }
+        
+        .list-group-item {
+            background-color: #2d2f31;
+            border: 1px solid #3a3d40;
+            color: #ffffff;
+        }
+        
+        .list-group-item:hover {
+            background-color: #3a3d40;
+            color: #ffffff;
+        }
+        
+        .text-muted {
+            color: rgba(255,255,255,.6) !important;
+        }
+        
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        
+        .btn-secondary {
+            background-color: #3a3d40;
+            border-color: #3a3d40;
+        }
+        
+        .modal-title {
+            color: #ffffff;
+        }
+        
+        .form-label {
+            color: #ffffff;
+        }
+        
+        /* 通用模态框样式 */
+        .modal-dialog {
+            max-width: 800px;
+        }
+        
+        /* 文件拖放区域样式 */
+        .drop-zone {
+            padding: 3rem;
+            text-align: center;
+            background-color: #1a1c1e;
+            border: 2px dashed #3a3d40;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone:hover {
+            border-color: #0d6efd;
+            background-color: #1d2023;
+        }
+        
+        .drop-zone.dragover {
+            border-color: #0d6efd;
+            background-color: #1d2023;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #00ccff;
+            margin-bottom: 1rem;
+        }
+        
+        /* 数据源选择样式 */
+        .source-list {
+            height: 400px;
+            overflow-y: auto;
+            border-right: 1px solid #3a3d40;
+        }
+        
+        .source-item {
+            padding: 1rem;
+            border-bottom: 1px solid #3a3d40;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .source-item:hover, .source-item.active {
+            background-color: #3a3d40;
+        }
+        
+        .source-item.active {
+            background-color: #3a3d40;
+            border-left: 3px solid #00ccff;
+        }
+        
+        .source-item h6 {
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .table-list {
+            height: 400px;
+            overflow-y: auto;
+        }
+        
+        /* 示例数据卡片样式 */
+        .sample-card {
+            background-color: #2d2f31;
+            border: 1px solid #3a3d40;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sample-card .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        
+        .sample-icon {
+            font-size: 2.8rem;
+            color: #00ccff;
+            margin-bottom: 1.2rem;
+        }
+        
+        .sample-card .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .sample-card .card-text {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 顶部标题栏样式 */
+        .header {
+            background-color: #1a1c1e;
+            border-bottom: 1px solid #3a3d40;
+            padding: 0.8rem 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .header-icon path {
+            stroke: #00ccff;
+        }
+        
+        .header h1 {
+            color: #ffffff;
+            font-size: 18px;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* 调整主内容区域，为顶部标题栏留出空间 */
+        .main-content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        /* 调整卡片容器样式 */
+        .cards-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* 添加示例数据链接图标的样式 */
+        .sample-link i {
+            color: #00ccff;
+        }
+
+        .features-section {
+            padding: 20px;
+        }
+
+        .features-section h4 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+        }
+
+        .feature-item i {
+            font-size: 1.5rem;
+            color: #00ccff;
+            flex-shrink: 0;
+        }
+
+        .feature-content h6 {
+            color: #ffffff;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .feature-content p {
+            color: #9da3a7;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        .table-action-btn {
+            color: #00ccff;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .table-action-btn:hover {
+            color: #00ccff;
+            transform: scale(1.1);
+        }
+
+        .upload-section {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error-message {
+            color: red;
+            display: none;
+        }
+        .success-message {
+            color: green;
+            display: none;
+        }
+
+        /* 添加一些自定义样式 */
+        .modal-lg {
+            max-width: 900px;
+        }
+
+        .modal-body-container {
+            height: 500px;
+        }
+
+        .datasource-list-container,
+        .table-list-container {
+            height: 100%;
+            overflow-y: auto;
+            background-color: #1a1c1e;
+        }
+
+        .datasource-item {
+            cursor: pointer;
+            padding: 1rem;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            position: relative;
+            padding-left: 1.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .datasource-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: transparent;
+            transition: background-color 0.2s;
+        }
+
+        .datasource-item.active::before {
+            background-color: #00ccff;
+        }
+
+        .datasource-item:hover {
+            background-color: rgba(255,255,255,.05);
+        }
+
+        .datasource-item.active {
+            background-color: rgba(255,255,255,.08);
+        }
+
+        .datasource-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.2rem;
+        }
+
+        .datasource-type {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,.5);
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        .datasource-description {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,.6);
+            margin-bottom: 0;
+            margin-top: 0.2rem;
+        }
+
+        .table-item {
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+
+        .table-item:hover {
+            background-color: rgba(255,255,255,.05);
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .table-stats {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,.5);
+        }
+
+        .table-description {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,.6);
+            margin-bottom: 0;
+        }
+
+        /* 自定义滚动条样式 */
+        .datasource-list-container::-webkit-scrollbar,
+        .table-list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .datasource-list-container::-webkit-scrollbar-track,
+        .table-list-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .datasource-list-container::-webkit-scrollbar-thumb,
+        .table-list-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .datasource-list-container::-webkit-scrollbar-thumb:hover,
+        .table-list-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .table-list-header {
+            background-color: #1a1c1e;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            border-bottom-color: rgba(255,255,255,.1) !important;
+        }
+
+        .table-count {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            background-color: rgba(255,255,255,.1);
+        }
+
+        /* 修改左右栏分割线颜色 */
+        .modal-body-container .border-end {
+            border-color: rgba(255,255,255,.1) !important;
+        }
+
+        /* 确保所有分割线颜色统一 */
+        .border-bottom {
+            border-bottom-color: rgba(255,255,255,.1) !important;
+        }
+
+        /* 统一背景色 */
+        .modal-content,
+        .datasource-list-container,
+        .table-list-container,
+        .table-list-header {
+            background-color: #2d2f31 !important;  /* 使用对话框的背景色 */
+        }
+
+        .table-list-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            border-bottom-color: rgba(255,255,255,.1) !important;
+            padding: 0.75rem 1rem !important;  /* 调整padding使其更紧凑 */
+        }
+
+        .table-count {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            background-color: rgba(255,255,255,.1);
+            color: rgba(255,255,255,.6);
+        }
+
+        /* 修改左右栏分割线颜色 */
+        .modal-body-container .border-end {
+            border-color: rgba(255,255,255,.1) !important;
+        }
+
+        /* 确保所有分割线颜色统一 */
+        .border-bottom {
+            border-bottom-color: rgba(255,255,255,.1) !important;
+        }
+
+        /* 修改功能卡片样式 */
+        .feature-card {
+            background-color: #2d2f31;
+            border: 2px solid #3a3d40;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            height: 220px;  /* 增加卡片高度 */
+            width: 340px;   /* 增加卡片宽度 */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;  /* 增加内边距 */
+        }
+
+        .feature-card:hover {
+            border-color: #00ccff;
+            box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+            transform: none;
+        }
+
+        .feature-icon {
+            font-size: 3rem;  /* 增大图标尺寸 */
+            color: #00ccff;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;  /* 增大标题字号 */
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .feature-description {
+            font-size: 1rem;  /* 增大描述文字字号 */
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        /* 调整卡片容器的间距 */
+        .features-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <header class="header">
+        <div class="header-title">
+            <svg class="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 8V16C21 17.1046 20.1046 18 19 18H5C3.89543 18 3 17.1046 3 16V8M21 8L12 3L3 8M21 8L12 13L3 8" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 11L15 11" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 14L17 14" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h1>数智求索</h1>
+        </div>
+    </header>
+
+    <!-- 在导航栏右侧添加链接 -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <span class="navbar-brand">数据清洗工具</span>
+            <a href="/dtale" class="btn btn-outline-light">
+                <i class="bi bi-table me-2"></i>打开分析界面
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <div class="cards-container">
+            <!-- 特色说明区域 -->
+            <div class="features-section mb-5">
+                <div class="row row-cols-2 row-cols-md-3 g-4">
+                    <div class="col">
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div class="feature-content">
+                                <h6>标准规范检查</h6>
+                                <p>检查数据是否符合预定义的标准格式或规范</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="feature-item">
+                            <i class="bi bi-question-diamond"></i>
+                            <div class="feature-content">
+                                <h6>缺失数据检查</h6>
+                                <p>检查数据是否存在缺失值（如空值、NULL值等）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="feature-item">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <div class="feature-content">
+                                <h6>错误数据检查</h6>
+                                <p>检查数据中是否存在明显错误（如超出范围的数值、拼写错误等）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="feature-item">
+                            <i class="bi bi-files"></i>
+                            <div class="feature-content">
+                                <h6>重复数据检查</h6>
+                                <p>检查数据中是否存在重复数据</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="feature-item">
+                            <i class="bi bi-arrow-left-right"></i>
+                            <div class="feature-content">
+                                <h6>一致性检查</h6>
+                                <p>不完整或相互矛盾，不相容性的不一致数据进行检查</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="feature-item">
+                            <i class="bi bi-x-octagon"></i>
+                            <div class="feature-content">
+                                <h6>无效数据检查</h6>
+                                <p>检查数据中是否存在无效值（如无意义的字符等）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主要功能卡片 -->
+            <div class="features-container">
+                <div class="row g-5 justify-content-center">
+                    <div class="col-md-6">
+                        <div class="feature-card" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                            <i class="bi bi-file-earmark-arrow-up feature-icon"></i>
+                            <h3 class="feature-title">文件方式</h3>
+                            <p class="feature-description">从本地CSV或Excel文件导入数据</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card" data-bs-toggle="modal" data-bs-target="#datasourceModal">
+                            <i class="bi bi-diagram-3 feature-icon"></i>
+                            <h3 class="feature-title">数据中台</h3>
+                            <p class="feature-description">连接到数据中台获取实时数据</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 示例数据链接 -->
+    <a href="#" class="sample-link" data-bs-toggle="modal" data-bs-target="#sampleModal">
+        <i class="bi bi-lightbulb"></i> 试试示例数据
+    </a>
+
+    <!-- 文件上传模态框 -->
+    <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">上传数据文件</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="uploadForm">
+                        <div class="drop-zone" id="dropZone">
+                            <input type="file" name="file" id="fileInput" accept=".csv,.xlsx" class="d-none" required>
+                            <i class="bi bi-cloud-upload drop-zone-icon"></i>
+                            <h4>拖拽文件到这里</h4>
+                            <p class="text-muted">或点击选择文件</p>
+                            <small class="text-muted d-block mt-2">支持的文件类型：CSV、Excel (xlsx)，最大文件大小：20MB</small>
+                        </div>
+                        <div class="mt-3">
+                            <p id="errorMsg" class="error-message text-danger"></p>
+                            <p id="successMsg" class="success-message text-success"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据源选择对话框 -->
+    <div class="modal fade" id="datasourceModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">选择数据源</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="row g-0 modal-body-container">
+                        <!-- 左侧数据源列表 -->
+                        <div class="col-4 border-end datasource-list-container">
+                            <div class="list-group list-group-flush" id="datasourceList">
+                                <!-- 数据源列表将动态加载到这里 -->
+                            </div>
+                        </div>
+                        <!-- 右侧表格列表 -->
+                        <div class="col-8 table-list-container">
+                            <!-- 表头部分 -->
+                            <div class="table-list-header border-bottom">
+                                <span class="table-count text-muted"></span>
+                            </div>
+                            <div class="list-group list-group-flush" id="tableList">
+                                <div class="text-center text-muted p-4">
+                                    请选择一个数据源
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 示例数据模态框 -->
+    <div class="modal fade" id="sampleModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">选择示例数据</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="sample-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-people sample-icon"></i>
+                                    <h5 class="card-title">人口统计数据</h5>
+                                    <p class="card-text text-muted">2000条人口统计样本数据</p>
+                                    <small class="text-muted">包含年龄、性别、收入等信息</small>
+                                    <a href="/sample/population" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="sample-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-cart sample-icon"></i>
+                                    <h5 class="card-title">销售数据</h5>
+                                    <p class="card-text text-muted">1500条销售记录</p>
+                                    <small class="text-muted">包含商品、价格、销量信息</small>
+                                    <a href="/sample/sales" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="sample-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-cloud-sun sample-icon"></i>
+                                    <h5 class="card-title">气象数据</h5>
+                                    <p class="card-text text-muted">3000条气象记录</p>
+                                    <small class="text-muted">包含温度、湿度、气压信息</small>
+                                    <a href="/sample/weather" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="sample-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-film sample-icon"></i>
+                                    <h5 class="card-title">电影数据</h5>
+                                    <p class="card-text text-muted">1000条电影信息记录</p>
+                                    <small class="text-muted">包含电影名称、评分、导演、演员等信息</small>
+                                    <a href="/sample/movies" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+
+        // 点击拖放区域触发文件选择
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        // 处理拖放事件
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                handleFile(files[0]);
+            }
+        });
+
+        // 处理文件选择
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        // 处理文件上传
+        function handleFile(file) {
+            // 检查文件类型
+            const allowedTypes = ['.csv', '.xlsx'];
+            const fileExt = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+            if (!allowedTypes.includes(fileExt)) {
+                errorMsg.textContent = '只支持上传 CSV 和 Excel (xlsx) 文件';
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+                return;
+            }
+
+            // 检查文件大小
+            if (file.size > 20 * 1024 * 1024) {  // 20MB
+                errorMsg.textContent = '文件大小不能超过20MB';
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+                return;
+            }
+
+            // 上传文件
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    errorMsg.style.display = 'none';
+                    successMsg.textContent = result.message;
+                    successMsg.style.display = 'block';
+                    
+                    // 重定向到数据分析视图页面
+                    window.location.href = result.data.view_url;
+                } else {
+                    successMsg.style.display = 'none';
+                    errorMsg.textContent = result.message;
+                    errorMsg.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                successMsg.style.display = 'none';
+                errorMsg.textContent = '上传失败，请重试';
+                errorMsg.style.display = 'block';
+                console.error('Error:', error);
+            });
+        }
+
+        // 加载数据源信息
+        async function loadDatasources() {
+            try {
+                const response = await fetch('/api/datasources');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const datasourceList = document.getElementById('datasourceList');
+                    datasourceList.innerHTML = '';
+                    
+                    result.datasources.forEach((ds, index) => {
+                        const dsElement = document.createElement('div');
+                        dsElement.className = 'datasource-item';
+                        dsElement.innerHTML = `
+                            <h6 class="datasource-name">${ds.name}</h6>
+                            <span class="datasource-type">${ds.type}</span>
+                            ${ds.description ? `<p class="datasource-description">${ds.description}</p>` : ''}
+                        `;
+                        
+                        dsElement.addEventListener('click', () => {
+                            loadDatasourceTables(ds.name, dsElement);
+                        });
+                        
+                        datasourceList.appendChild(dsElement);
+                        
+                        // 默认选中第一个数据源
+                        if (index === 0) {
+                            dsElement.click();
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading datasources:', error);
+                showError('加载数据源失败，请重试');
+            }
+        }
+
+        // 加载数据源的表信息
+        async function loadDatasourceTables(datasourceName, dsElement) {
+            // 更新选中状态
+            document.querySelectorAll('.datasource-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            dsElement.classList.add('active');
+            
+            // 显示加载中
+            const tableList = document.getElementById('tableList');
+            const tableCount = document.querySelector('.table-count');
+            tableCount.textContent = '加载中...';
+            
+            tableList.innerHTML = `
+                <div class="text-center p-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">正在加载表信息...</p>
+                </div>
+            `;
+            
+            try {
+                console.log('Fetching tables for datasource:', datasourceName);
+                const response = await fetch(`/api/datasources/${encodeURIComponent(datasourceName)}/tables`);
+                console.log('Response:', response);
+                const result = await response.json();
+                console.log('Result:', result);
+                
+                if (response.ok && result.success) {
+                    // 更新表数量显示
+                    tableCount.textContent = `共 ${result.tables.length} 个表`;
+                    
+                    // 更新表列表
+                    tableList.innerHTML = result.tables.map(table => `
+                        <a href="/datasource/${encodeURIComponent(datasourceName)}/${encodeURIComponent(table.name)}" 
+                           class="list-group-item list-group-item-action table-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">${table.name}</h6>
+                            </div>
+                            <p class="table-description">${table.description || '无描述'}</p>
+                        </a>
+                    `).join('');
+                } else {
+                    tableCount.textContent = '';
+                    showError(result.error || '加载表信息失败');
+                }
+            } catch (error) {
+                console.error('Error loading tables:', error);
+                tableCount.textContent = '';
+                showError('连接数据源失败，请检查数据源配置');
+            }
+        }
+
+        // 显示错误信息
+        function showError(message) {
+            const tableList = document.getElementById('tableList');
+            tableList.innerHTML = `
+                <div class="text-center p-4">
+                    <i class="bi bi-exclamation-circle text-danger" style="font-size: 2rem;"></i>
+                    <p class="mt-2 text-danger">${message}</p>
+                </div>
+            `;
+        }
+
+        // 当对话框打开时加载数据源
+        const datasourceModal = document.getElementById('datasourceModal');
+        datasourceModal.addEventListener('show.bs.modal', loadDatasources);
+    </script>
+</body>
+</html> 

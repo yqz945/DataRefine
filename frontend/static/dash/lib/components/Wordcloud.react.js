@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import WordcloudBody from '../../../popups/charts/WordcloudBody.tsx';
 
 /**
  * Wordcloud is a wrapper component for react-wordcloud usage by dash.

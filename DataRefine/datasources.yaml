@@ -1,0 +1,10 @@
+# 数据源配置
+datasources:
+  - name: "统计分析数据集市"
+    type: "mysql"
+    description: "统计分析数据集市库"
+    config:
+      host: "10.0.200.84"
+      port: 10794
+      database: "data_server"
+      credentials_key: "统计分析数据集市"
