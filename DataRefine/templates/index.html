@@ -966,11 +966,8 @@
             `;
             
             try {
-                console.log('Fetching tables for datasource:', datasourceName);
                 const response = await fetch(`/api/datasources/${encodeURIComponent(datasourceName)}/tables`);
-                console.log('Response:', response);
                 const result = await response.json();
-                console.log('Result:', result);
                 
                 if (response.ok && result.success) {
                     // 更新表数量显示
@@ -983,7 +980,7 @@
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="mb-1">${table.name}</h6>
                             </div>
-                            <p class="table-description">${table.description || '无描述'}</p>
+                            ${table.description ? `<p class="mb-1 text-muted">${table.description}</p>` : ''}
                         </a>
                     `).join('');
                 } else {
@@ -993,7 +990,7 @@
             } catch (error) {
                 console.error('Error loading tables:', error);
                 tableCount.textContent = '';
-                showError('连接数据源失败，请检查数据源配置');
+                showError('加载表信息失败，请重试');
             }
         }
 
