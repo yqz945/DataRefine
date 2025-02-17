@@ -93,6 +93,17 @@ seaborn<=0.11.2; python_version == '3.6'
 seaborn<=0.12.2; python_version == '3.7'
 seaborn; python_version > '3.7'
 squarify
+statsmodels<=0.10.2; python_version == '2.7'
+statsmodels<=0.12.2; python_version == '3.0'
+statsmodels<=0.12.2; python_version == '3.1'
+statsmodels<=0.12.2; python_version == '3.2'
+statsmodels<=0.12.2; python_version == '3.3'
+statsmodels<=0.12.2; python_version == '3.4'
+statsmodels<=0.12.2; python_version == '3.5'
+statsmodels<=0.12.2; python_version == '3.6'
+statsmodels<=0.12.2; python_version == '3.7'
+statsmodels<=0.14.1; python_version == '3.8'
+statsmodels; python_version > '3.8'
 strsimpy
 six
 # required for loading plotly
@@ -110,8 +121,5 @@ zipp<=3.15.0; python_version == '3.6'
 zstandard<=0.20.0; python_version == '3.6'
 zstandard<=0.21.0; python_version == '3.7'
 zstandard<=0.14.0; python_version == '2.7'
-# require for DataRefile
-sqlalchemy==1.4.46
-mysql-connector-python==8.0.33
-PyYAML==6.0.1
-cos-python-sdk-v5>=1.9.34
+JayDeBeApi>=1.2.3
+JPype1>=1.4.1
